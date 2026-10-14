@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!-- SEO -->
+  <title>Nama Anda — Portofolio</title>
+  <meta name="description" content="Portofolio interaktif Nama Anda — web developer dari Jawa Tengah. Terbangkan pesawat untuk menjelajahi profil, proyek, dan kontak.">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Canvas utama (2D langit) -->
+  <canvas
+    id="c"
+    aria-label="Langit interaktif: terbangkan pesawat untuk menjelajahi portofolio"
+  ></canvas>
+
+  <!-- Canvas Three.js (pesawat 3D, pointer-events dinonaktifkan) -->
+  <canvas id="c3"></canvas>
+
+  <!-- Header nama -->
+  <div class="top">
+    <h1>Dimas<br>Wahyu</h1>
+    <p>Web developer yang suka membuat hal kecil terasa hidup.</p>
+  </div>
+
+  <!-- Hint bar -->
+  <div class="hint" id="hint">
+    Geser mouse, sentuh layar, atau tombol panah · klik untuk mengaktifkan suara
+  </div>
+
+  <!-- Navigasi station -->
+  <nav class="nav" id="nav" aria-label="Navigasi portofolio"></nav>
+
+  <!-- Info card (konten station) -->
+  <section class="card" id="card" aria-live="polite"></section>
+
+  <!-- Three.js (dari CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Entry point (ES Module) -->
+  <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

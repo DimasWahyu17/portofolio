@@ -1,0 +1,239 @@
+﻿/* ================================================
+   PORTOFOLIO — LANGIT INTERAKTIF
+   Style sheet utama
+   ================================================ */
+
+/* ---- CSS Custom Properties (Design Tokens) ---- */
+:root {
+  --sky1:  #0b1230;
+  --sky2:  #2b2a6b;
+  --sun:   #ffd166;
+  --mint:  #7ae0d0;
+  --ink:   #f2f4ff;
+  --dim:   #aab1d6;
+  --panel: rgba(14, 19, 50, .82);
+
+  /* Safe-area padding untuk notch / home-bar */
+  box-sizing: border-box;
+  padding-top:    env(safe-area-inset-top,    0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ---- Dark mode otomatis ---- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #f2f4ff;
+  }
+}
+:root[data-theme="dark"] {
+  --ink: #f2f4ff;
+}
+
+/* ---- Reset dasar ---- */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--sky1);
+  color: var(--ink);
+  font-family: 'Bricolage Grotesque', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  touch-action: none;
+}
+
+/* ---- Canvas ---- */
+canvas {
+  position: fixed;
+  inset: 0;
+  display: block;
+  /*
+   * JANGAN set width/height di sini.
+   * Ukuran diatur secara eksplisit via JS (main.js & plane3d.js)
+   * agar pixel buffer dan CSS size selalu cocok → tidak blur di Chrome.
+   */
+}
+
+#c3 {
+  pointer-events: none;
+}
+
+/* ---- Avatar ---- */
+.av {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #2b2a6b center / cover;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 26px;
+  margin-bottom: 10px;
+  border: 2px solid var(--c);
+}
+
+/* ---- Header nama ---- */
+.top {
+  position: fixed;
+  left: 20px;
+  top: calc(env(safe-area-inset-top, 0px) + 16px);
+  pointer-events: none;
+}
+
+.top h1 {
+  margin: 0;
+  font-size: clamp(28px, 5vw, 54px);
+  line-height: .95;
+  font-weight: 800;
+  letter-spacing: -.03em;
+}
+
+.top p {
+  margin: 6px 0 0;
+  color: var(--dim);
+  font-size: 15px;
+  max-width: 30ch;
+}
+
+/* ---- Hint bar ---- */
+.hint {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 78px);
+  background: var(--panel);
+  padding: 8px 16px;
+  border-radius: 99px;
+  font-size: 14px;
+  color: var(--dim);
+  transition: opacity .6s;
+  white-space: nowrap;
+  max-width: 94vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---- Navigation bar ---- */
+.nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 14px);
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  padding: 0 12px;
+  flex-wrap: wrap;
+}
+
+.nav button {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1.5px solid rgba(255, 255, 255, .18);
+  padding: 9px 16px;
+  border-radius: 99px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.nav button:hover,
+.nav button:focus-visible {
+  border-color: var(--sun);
+  outline: none;
+}
+
+/* ---- Info card ---- */
+.card {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  width: min(360px, calc(100vw - 40px));
+  max-height: 60vh;
+  overflow: auto;
+  transform: translateY(-50%) scale(.92);
+  opacity: 0;
+  pointer-events: none;
+  background: var(--panel);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid var(--c, var(--sun));
+  border-radius: 22px 22px 22px 4px;
+  padding: 22px;
+  transition: opacity .25s, transform .25s;
+}
+
+.card.on {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+  pointer-events: auto;
+}
+
+.card h2 {
+  margin: 0 0 8px;
+  font-size: 26px;
+  letter-spacing: -.02em;
+  color: var(--c, var(--sun));
+}
+
+.card p,
+.card li {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.card ul {
+  padding-left: 18px;
+  margin: 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chips span {
+  border: 1px solid var(--c);
+  border-radius: 99px;
+  padding: 3px 11px;
+  font-size: 13px;
+}
+
+.card a {
+  color: var(--c, var(--sun));
+  font-weight: 700;
+}
+
+/* ---- Responsive: mobile ---- */
+@media (max-width: 640px) {
+  .card {
+    right: 50%;
+    top: auto;
+    bottom: 130px;
+    transform: translate(50%, 0) scale(.92);
+    max-height: 38vh;
+  }
+
+  .card.on {
+    transform: translate(50%, 0) scale(1);
+  }
+
+  .top p {
+    display: none;
+  }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .hint {
+    transition: none;
+  }
+}
+
