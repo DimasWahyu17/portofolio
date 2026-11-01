@@ -1,4 +1,4 @@
-﻿/**
+/**
  * physics.js — Logika pergerakan pesawat
  *
  * Mengatur state pesawat (posisi, arah, kecepatan, bank)
