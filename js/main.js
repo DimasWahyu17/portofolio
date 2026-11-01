@@ -8,7 +8,7 @@ import { init3D, resize3D, render3D, renderer3 } from './plane3d.js';
 import {
   step, P, cam,
   setPtr, setPtrT, setKey, setAuto, setCardEl, setHintEl,
-  touchInput
+  touchInput, undock, isDocked, toggleSpeed, getSpd
 } from './physics.js';
 import { draw, setViewport } from './renderer.js';
 
@@ -64,6 +64,8 @@ addEventListener('pointermove', e => {
 
 addEventListener('pointerdown', e => {
   initAudio();
+  // Ketuk langit saat mendarat = lepas landas
+  if (isDocked() && e.target === cv) undock();
   setPtr({ x: e.clientX, y: e.clientY });
   setPtrT(performance.now());
   touchInput();
@@ -71,6 +73,9 @@ addEventListener('pointerdown', e => {
 
 addEventListener('keydown', e => {
   initAudio();
+  // Tombol gerak / Esc saat mendarat = lepas landas
+  if (isDocked() && (e.key.startsWith('Arrow') || e.key === 'Escape' ||
+      ['w', 'a', 's', 'd'].includes(e.key.toLowerCase()))) undock();
   setKey(e.key.toLowerCase(), 1);
   if (e.key.startsWith('Arrow')) e.preventDefault();
   touchInput();
@@ -87,6 +92,7 @@ STATIONS.forEach(s => {
   b.id = `nav-${s.id}`;
   b.onclick = () => {
     initAudio();
+    undock();
     setAuto(s);
     if (hintEl) hintEl.style.opacity = 0;
     setPtr(null);
@@ -107,6 +113,17 @@ sb.onclick = () => {
 };
 navEl.appendChild(sb);
 
+// ── Tombol kecepatan ────────────────────────────────────────────
+const vb = document.createElement('button');
+vb.id          = 'btn-speed';
+vb.textContent = '🐢 Pelan';
+vb.onclick = () => {
+  const slow = toggleSpeed();
+  vb.textContent = slow ? '🐢 Pelan' : '🚀 Cepat';
+  vb.blur();
+};
+navEl.appendChild(vb);
+
 // ── Game loop ───────────────────────────────────────────────────
 let last = performance.now();
 
@@ -116,7 +133,7 @@ function loop(t) {
 
   step(dt);
   draw(g, t, !!renderer3);
-  audioStep(P.v);
+  audioStep(P.v / getSpd());
 
   if (renderer3) {
     render3D(P.x, P.y, cam.x, cam.y, P.a, P.bank, t);

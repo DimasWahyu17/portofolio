@@ -237,3 +237,5 @@ canvas {
   }
 }
 
+.go{position:sticky;bottom:0;margin-top:12px;width:100%;font:inherit;font-weight:800;font-size:15px;color:#0b1230;background:var(--c,#ffd166);border:0;border-radius:99px;padding:11px 16px;cursor:pointer;touch-action:manipulation}
+.card .st{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c);margin:0 0 6px;font-weight:700}
