@@ -80,7 +80,7 @@ export const STATIONS = [
     html: `
       <h2>Keahlian</h2>
       <p>Web &amp; backend</p>
-      <div class="chips"><span>React</span><span>Flask</span><span>JavaScript</span><span>Python</span></div>
+      <div class="chips"><span>React</span><span>Flask</span><span>JavaScript</span><span>Python</span><span>RESTful API</span></div>
       <p style="margin-top:10px">Mobile &amp; desain</p>
       <div class="chips"><span>Flutter</span><span>Figma</span></div>
       <p style="margin-top:10px">Data &amp; alat</p>
